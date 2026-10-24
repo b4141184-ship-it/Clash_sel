@@ -2,78 +2,559 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101014">
+<meta name="description" content="فروشگاه گیمینگ Clash_sel؛ خرید اکانت بازی و محصولات گیمینگ">
 <title>Clash_sel | فروشگاه گیمینگ</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#101014;color:#fff;font-family:Tahoma,Arial,sans-serif}
-header{background:#1a1a22;padding:24px;text-align:center;border-bottom:3px solid #e53935}
-header h1{color:#ff4545;margin:0;font-size:32px}
-header p{color:#ccc}
-.hero{padding:38px 18px;text-align:center;background:linear-gradient(135deg,#351010,#111119)}
-.hero h2{font-size:26px}
-.hero p{color:#ddd;line-height:2}
-.badge{display:inline-block;background:#d92727;padding:10px 20px;border-radius:20px}
-main{max-width:1000px;margin:auto;padding:20px}
-h2.section{border-right:4px solid #e53935;padding-right:12px;margin-top:30px}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.card{background:#1c1c25;border:1px solid #343440;border-radius:14px;padding:20px;box-shadow:0 5px 18px #0004}
-.card h3{color:#ff5555}
-.price{font-size:20px;font-weight:bold;color:#fff}
-button,.btn{display:block;text-align:center;background:#e53935;color:white;border:0;border-radius:8px;padding:13px 15px;font-size:15px;cursor:pointer;width:100%;margin-top:12px;text-decoration:none}
-button:hover,.btn:hover{background:#b71c1c}
-.note{background:#211c1c;border:1px solid #633;padding:15px;border-radius:10px;line-height:2;color:#eee}
-footer{text-align:center;padding:25px;color:#aaa;background:#191920;margin-top:30px}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #101014;
+    --card: #1b1b23;
+    --green: #00ff99;
+    --text: #ffffff;
+    --muted: #b5b5c5;
+}
+
+body {
+    font-family: Tahoma, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+header {
+    background: #17171f;
+    border-bottom: 1px solid #292934;
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--green);
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #ddd;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: var(--green);
+}
+
+.hero {
+    padding: 65px 20px;
+    text-align: center;
+    background:
+        radial-gradient(ellipse at top, #173d32 0%, #101014 65%);
+}
+
+.hero h1 {
+    font-size: clamp(30px, 5vw, 48px);
+    margin-bottom: 12px;
+}
+
+.hero h1 span {
+    color: var(--green);
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 25px;
+}
+
+.button {
+    display: inline-block;
+    padding: 11px 22px;
+    background: var(--green);
+    color: #06130d;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.2s;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.section {
+    max-width: 1150px;
+    margin: auto;
+    padding: 35px 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 27px;
+}
+
+.section-title span {
+    color: var(--green);
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.filter-btn {
+    background: #20202a;
+    color: white;
+    border: 1px solid #33333e;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: var(--green);
+    color: #06130d;
+}
+
+.search {
+    display: block;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto 25px;
+    padding: 12px;
+    background: #1b1b23;
+    border: 1px solid #353541;
+    color: white;
+    border-radius: 9px;
+    font-family: inherit;
+    outline: none;
+}
+
+.search:focus {
+    border-color: var(--green);
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+.product {
+    background: var(--card);
+    border: 1px solid #2d2d38;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.product:hover {
+    transform: translateY(-4px);
+    border-color: var(--green);
+}
+
+.product-image {
+    height: 155px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 65px;
+    background: linear-gradient(135deg, #26352e, #242432);
+}
+
+.product-content {
+    padding: 17px;
+}
+
+.product h3 {
+    font-size: 18px;
+    margin-bottom: 7px;
+}
+
+.description {
+    color: var(--muted);
+    font-size: 13px;
+    min-height: 45px;
+}
+
+.price {
+    color: var(--green);
+    font-size: 20px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.product .button {
+    width: 100%;
+    text-align: center;
+}
+
+.badge {
+    display: inline-block;
+    background: #263b32;
+    color: var(--green);
+    padding: 3px 9px;
+    border-radius: 5px;
+    font-size: 11px;
+    margin-bottom: 8px;
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 25px;
+    display: none;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.feature {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #292934;
+    text-align: center;
+}
+
+.feature .icon {
+    font-size: 30px;
+}
+
+.feature h3 {
+    color: var(--green);
+    margin: 5px 0;
+}
+
+.feature p {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+footer {
+    margin-top: 30px;
+    padding: 25px 15px;
+    text-align: center;
+    background: #17171f;
+    border-top: 1px solid #292934;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+footer strong {
+    color: var(--green);
+}
+
+@media (max-width: 600px) {
+    header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .hero {
+        padding: 45px 15px;
+    }
+
+    .section {
+        padding: 28px 15px;
+    }
+}
 </style>
 </head>
+
 <body>
+
 <header>
-<h1>⚔️ Clash_sel</h1>
-<p>فروشگاه گیمینگ کلش آف کلنز</p>
+    <a href="#" class="logo">🎮 Clash_sel</a>
+
+    <nav>
+        <a href="#home">صفحه اصلی</a>
+        <a href="#products">محصولات</a>
+        <a href="#features">مزایای ما</a>
+        <a href="#contact">تماس با ما</a>
+    </nav>
 </header>
 
-<section class="hero">
-<h2>به میدان نبرد خوش آمدی!</h2>
-<p>اکانت کلش و محصولات گیمینگ را از فروشگاه ما بررسی کن.</p>
-<span class="badge">🔥 سفارش از طریق روبیکا</span>
+<main>
+
+<section class="hero" id="home">
+    <h1>به <span>Clash_sel</span> خوش آمدید!</h1>
+    <p>
+        فروشگاه گیمینگ شما برای مشاهده و سفارش محصولات بازی.
+        محصول موردنظرت را انتخاب کن و برای سفارش اقدام کن.
+    </p>
+    <a href="#products" class="button">مشاهده محصولات 🎮</a>
 </section>
 
-<main>
-<h2 class="section">🎮 محصولات فروشگاه</h2>
-<div class="products">
+<section class="section" id="products">
 
-<div class="card">
-<h3>🏆 اکانت کلش آف کلنز</h3>
-<p>اکانت بازی؛ برای دریافت جزئیات بیشتر پیام بده.</p>
-<p class="price">۳۰۰٬۰۰۰ تومان</p>
-<a class="btn" href="https://rubika.ir/RaGnAr_shoop" target="_blank" rel="noopener">سفارش اکانت</a>
-</div>
+    <h2 class="section-title">🛒 محصولات <span>فروشگاه</span></h2>
 
-<div class="card">
-<h3>💎 جم کلش آف کلنز</h3>
-<p>برای اطلاع از بسته‌ها و قیمت روز جم پیام بده.</p>
-<p class="price">استعلام قیمت</p>
-<a class="btn" href="https://rubika.ir/RaGnAr_shoop" target="_blank" rel="noopener">استعلام و سفارش جم</a>
-</div>
+    <input
+        type="search"
+        id="search"
+        class="search"
+        placeholder="نام محصول را جستجو کن..."
+        aria-label="جستجوی محصولات"
+    >
 
-<div class="card">
-<h3>🛡️ مشاوره و راهنمای بازی</h3>
-<p>برای پرسیدن سؤال درباره پیشرفت دهکده پیام بده.</p>
-<p class="price">استعلام قیمت</p>
-<a class="btn" href="https://rubika.ir/RaGnAr_shoop" target="_blank" rel="noopener">ارتباط با فروشگاه</a>
-</div>
+    <div class="filters">
+        <button class="filter-btn active" data-category="all">همه محصولات</button>
+        <button class="filter-btn" data-category="account">اکانت بازی</button>
+        <button class="filter-btn" data-category="gem">جم و منابع</button>
+        <button class="filter-btn" data-category="other">سایر محصولات</button>
+    </div>
 
-</div>
+    <div class="products" id="products-list"></div>
 
-<h2 class="section">📦 نحوه ثبت سفارش</h2>
-<div class="note">
-۱. روی دکمه محصول دلخواه بزن.<br>
-۲. از طریق روبیکا با فروشگاه تماس بگیر.<br>
-۳. جزئیات محصول و روش پرداخت را پیش از پرداخت بررسی کن.<br>
-<strong>توجه:</strong> این سایت فعلاً پرداخت آنلاین ندارد. رمز عبور، کد ورود یا اطلاعات حساس حسابت را برای کسی نفرست.
-</div>
+    <div class="empty" id="empty">
+        محصولی با این مشخصات پیدا نشد.
+    </div>
+
+</section>
+
+<section class="section" id="features">
+    <h2 class="section-title">چرا <span>Clash_sel؟</span></h2>
+
+    <div class="features">
+        <div class="feature">
+            <div class="icon">🎮</div>
+            <h3>محصولات گیمینگ</h3>
+            <p>مشاهده محصولات و قیمت‌ها در یک صفحه.</p>
+        </div>
+
+        <div class="feature">
+            <div class="icon">💰</div>
+            <h3>قیمت مشخص</h3>
+            <p>قیمت هر محصول زیر نام آن نمایش داده می‌شود.</p>
+        </div>
+
+        <div class="feature">
+            <div class="icon">📱</div>
+            <h3>سفارش آسان</h3>
+            <p>برای سفارش، از روش ارتباطی فروشگاه استفاده کن.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="contact">
+    <h2 class="section-title">تماس با <span>ما</span></h2>
+
+    <div class="feature">
+        <p>برای خرید، ابتدا محصول موردنظرت را انتخاب کن.</p>
+        <p style="margin-top:10px;color:#aaa">
+            راه ارتباطی فروشگاه هنوز تنظیم نشده است.
+        </p>
+    </div>
+</section>
+
 </main>
 
-<footer>© Clash_sel | فروشگاه گیمینگ</footer>
+<footer>
+    <p>© تمام حقوق برای <strong>Clash_sel</strong> محفوظ است.</p>
+    <p>فروشگاه گیمینگ</p>
+</footer>
+
+<script>
+"use strict";
+
+/*
+  تنظیمات محصولات:
+  برای تغییر قیمت، مقدار price را تغییر بده.
+  قیمت‌ها به تومان هستند.
+  برای اضافه کردن محصول، یک مورد جدید به آرایه اضافه کن.
+*/
+
+const PRODUCTS = [
+    {
+        id: 1,
+        name: "اکانت کلش معمولی",
+        category: "account",
+        description: "اکانت بازی کلش آف کلنز",
+        price: 150000,
+        icon: "🏰",
+        badge: "اکانت بازی"
+    },
+    {
+        id: 2,
+        name: "اکانت کلش حرفه‌ای",
+        category: "account",
+        description: "اکانت مناسب بازیکنان حرفه‌ای",
+        price: 450000,
+        icon: "⚔️",
+        badge: "ویژه"
+    },
+    {
+        id: 3,
+        name: "بسته جم",
+        category: "gem",
+        description: "بسته جم بازی؛ جزئیات هنگام سفارش مشخص شود",
+        price: 100000,
+        icon: "💎",
+        badge: "جم"
+    },
+    {
+        id: 4,
+        name: "اکانت کلش رویال",
+        category: "account",
+        description: "اکانت بازی کلش رویال",
+        price: 200000,
+        icon: "👑",
+        badge: "اکانت بازی"
+    },
+    {
+        id: 5,
+        name: "محصول گیمینگ ویژه",
+        category: "other",
+        description: "برای دریافت اطلاعات بیشتر سفارش بده",
+        price: 80000,
+        icon: "🎁",
+        badge: "ویژه"
+    },
+    {
+        id: 6,
+        name: "بسته منابع بازی",
+        category: "gem",
+        description: "نوع و مقدار منابع قبل از خرید تأیید شود",
+        price: 120000,
+        icon: "🪙",
+        badge: "منابع"
+    }
+];
+
+/*
+  آدرس سفارش را بعداً می‌توانی تنظیم کنی.
+  فعلاً کلیک روی سفارش، اطلاعات محصول را نمایش می‌دهد.
+*/
+
+let selectedCategory = "all";
+
+const productList = document.getElementById("products-list");
+const searchInput = document.getElementById("search");
+const emptyMessage = document.getElementById("empty");
+
+function formatPrice(price) {
+    return new Intl.NumberFormat("fa-IR").format(price) + " تومان";
+}
+
+function renderProducts() {
+    const searchText = searchInput.value.trim().toLowerCase();
+
+    const filtered = PRODUCTS.filter(product => {
+        const categoryMatch =
+            selectedCategory === "all" ||
+            product.category === selectedCategory;
+
+        const searchMatch =
+            product.name.toLowerCase().includes(searchText) ||
+            product.description.toLowerCase().includes(searchText);
+
+        return categoryMatch && searchMatch;
+    });
+
+    productList.innerHTML = "";
+
+    emptyMessage.style.display = filtered.length ? "none" : "block";
+
+    filtered.forEach(product => {
+        const card = document.createElement("article");
+        card.className = "product";
+
+        const image = document.createElement("div");
+        image.className = "product-image";
+        image.textContent = product.icon;
+
+        const content = document.createElement("div");
+        content.className = "product-content";
+
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = product.badge;
+
+        const title = document.createElement("h3");
+        title.textContent = product.name;
+
+        const description = document.createElement("p");
+        description.className = "description";
+        description.textContent = product.description;
+
+        const price = document.createElement("div");
+        price.className = "price";
+        price.textContent = formatPrice(product.price);
+
+        const order = document.createElement("button");
+        order.className = "button";
+        order.type = "button";
+        order.textContent = "سفارش محصول";
+
+        order.addEventListener("click", () => {
+            const message =
+                "محصول انتخاب‌شده: " + product.name + "\n" +
+                "قیمت: " + formatPrice(product.price) + "\n\n" +
+                "برای تکمیل سفارش، راه ارتباطی فروشگاه باید تنظیم شود.";
+
+            alert(message);
+        });
+
+        content.append(badge, title, description, price, order);
+        card.append(image, content);
+        productList.appendChild(card);
+    });
+}
+
+document.querySelectorAll(".filter-btn").forEach(button => {
+    button.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        button.classList.add("active");
+        selectedCategory = button.dataset.category;
+        renderProducts();
+    });
+});
+
+searchInput.addEventListener("input", renderProducts);
+
+renderProducts();
+</script>
+
 </body>
-  </html>
+                           </html>
