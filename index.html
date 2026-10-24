@@ -2,559 +2,305 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101014">
-<meta name="description" content="فروشگاه گیمینگ Clash_sel؛ خرید اکانت بازی و محصولات گیمینگ">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0b0f">
 <title>Clash_sel | فروشگاه گیمینگ</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b0f;color:#fff;font-family:Tahoma,Arial,sans-serif}
+header{background:#14141b;border-bottom:2px solid #ff303d;padding:15px}
+.container{width:92%;max-width:1100px;margin:auto}
+nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.logo{font-size:24px;font-weight:bold}
+.logo span{color:#ff303d}
+button{cursor:pointer;font-family:inherit}
+.btn{border:0;border-radius:10px;background:#ff303d;color:#fff;padding:11px 15px;font-weight:bold}
+.btn:hover{background:#d91f2b}
+.hero{padding:35px 0;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.hero-box{padding:25px;border:1px solid #4b2028;border-radius:20px;background:linear-gradient(135deg,#291019,#14141b)}
+.hero h1{font-size:clamp(28px,5vw,45px);line-height:1.5}
+.hero h1 span{color:#ff303d}
+.hero p,.muted{color:#aaa}
+.hero-icon{font-size:100px;text-align:center;background:#191018;border-radius:20px;padding:25px}
+.section-title{margin:25px 0 15px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.filters button{background:#1a1a22;border:1px solid #33333e;color:#fff;border-radius:20px;padding:8px 14px}
+.filters button.active{background:#ff303d;border-color:#ff303d}
+.tools{display:flex;gap:10px;margin-bottom:15px}
+input,select,textarea{font-family:inherit}
+.field{width:100%;padding:12px;border-radius:10px;border:1px solid #393943;background:#15151d;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card{background:#17171f;border:1px solid #33333e;border-radius:15px;overflow:hidden}
+.card-icon{height:110px;display:grid;place-items:center;font-size:55px;background:radial-gradient(circle,#4b1520,#17171f)}
+.card-body{padding:14px}
+.tag{font-size:12px;color:#ff858d}
+.card h3{font-size:16px}
+.desc{font-size:12px;color:#aaa;min-height:42px;line-height:1.9}
+.price{font-size:17px;font-weight:bold;margin:12px 0}
+.card .btn{width:100%}
+.notice{margin:25px 0;padding:15px;background:#241a13;border:1px solid #604321;border-radius:12px;color:#f3d6a0;line-height:2;font-size:13px}
+footer{margin-top:35px;padding:20px 0;border-top:1px solid #333;color:#aaa;font-size:12px}
+.overlay{display:none;position:fixed;inset:0;background:#000c;z-index:10;padding:15px;overflow:auto}
+.overlay.show{display:flex;justify-content:center;align-items:flex-start}
+.modal{width:100%;max-width:600px;background:#17171f;border:1px solid #444;border-radius:18px;padding:20px;margin:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center}
+.close{background:#333;color:white;border:0;border-radius:8px;padding:8px 12px;font-size:18px}
+.cart-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;margin:8px 0;background:#22222b;border-radius:10px}
+.cart-item small{display:block;color:#aaa}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{background:#333;color:#fff;border:0;border-radius:6px;width:28px;height:28px}
+.remove{background:none;color:#ff7b84;border:0;margin-top:5px}
+.total{display:flex;justify-content:space-between;border-top:1px solid #444;padding:15px 0;font-weight:bold}
+.form-group{margin:12px 0}
+.form-group label{display:block;margin-bottom:5px;font-size:13px;color:#ccc}
+.hidden{display:none}
+.success{background:#123024;border:1px solid #26724e;padding:14px;border-radius:10px;line-height:2;margin-top:12px}
+.empty{text-align:center;color:#aaa;padding:25px;border:1px dashed #444;border-radius:12px}
+@media(max-width:700px){
+ .hero{grid-template-columns:1fr}
+ .hero-icon{font-size:65px;padding:15px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .card-body{padding:10px}
+ .card h3{font-size:14px}
+ .desc{font-size:11px;min-height:55px}
+ .price{font-size:14px}
+ .card .btn{font-size:12px;padding:10px 5px}
+ .logo{font-size:18px}
 }
-
-:root {
-    --bg: #101014;
-    --card: #1b1b23;
-    --green: #00ff99;
-    --text: #ffffff;
-    --muted: #b5b5c5;
-}
-
-body {
-    font-family: Tahoma, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.8;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-header {
-    background: #17171f;
-    border-bottom: 1px solid #292934;
-    padding: 18px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.logo {
-    font-size: 25px;
-    font-weight: bold;
-    color: var(--green);
-}
-
-nav {
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
-}
-
-nav a {
-    color: #ddd;
-    font-size: 14px;
-}
-
-nav a:hover {
-    color: var(--green);
-}
-
-.hero {
-    padding: 65px 20px;
-    text-align: center;
-    background:
-        radial-gradient(ellipse at top, #173d32 0%, #101014 65%);
-}
-
-.hero h1 {
-    font-size: clamp(30px, 5vw, 48px);
-    margin-bottom: 12px;
-}
-
-.hero h1 span {
-    color: var(--green);
-}
-
-.hero p {
-    color: var(--muted);
-    max-width: 600px;
-    margin: 0 auto 25px;
-}
-
-.button {
-    display: inline-block;
-    padding: 11px 22px;
-    background: var(--green);
-    color: #06130d;
-    border: none;
-    border-radius: 9px;
-    font-weight: bold;
-    cursor: pointer;
-    font-family: inherit;
-    transition: 0.2s;
-}
-
-.button:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
-}
-
-.section {
-    max-width: 1150px;
-    margin: auto;
-    padding: 35px 20px;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 27px;
-}
-
-.section-title span {
-    color: var(--green);
-}
-
-.filters {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 22px;
-}
-
-.filter-btn {
-    background: #20202a;
-    color: white;
-    border: 1px solid #33333e;
-    padding: 9px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: inherit;
-}
-
-.filter-btn.active,
-.filter-btn:hover {
-    background: var(--green);
-    color: #06130d;
-}
-
-.search {
-    display: block;
-    width: 100%;
-    max-width: 450px;
-    margin: 0 auto 25px;
-    padding: 12px;
-    background: #1b1b23;
-    border: 1px solid #353541;
-    color: white;
-    border-radius: 9px;
-    font-family: inherit;
-    outline: none;
-}
-
-.search:focus {
-    border-color: var(--green);
-}
-
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 20px;
-}
-
-.product {
-    background: var(--card);
-    border: 1px solid #2d2d38;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: 0.2s;
-}
-
-.product:hover {
-    transform: translateY(-4px);
-    border-color: var(--green);
-}
-
-.product-image {
-    height: 155px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 65px;
-    background: linear-gradient(135deg, #26352e, #242432);
-}
-
-.product-content {
-    padding: 17px;
-}
-
-.product h3 {
-    font-size: 18px;
-    margin-bottom: 7px;
-}
-
-.description {
-    color: var(--muted);
-    font-size: 13px;
-    min-height: 45px;
-}
-
-.price {
-    color: var(--green);
-    font-size: 20px;
-    font-weight: bold;
-    margin: 12px 0;
-}
-
-.product .button {
-    width: 100%;
-    text-align: center;
-}
-
-.badge {
-    display: inline-block;
-    background: #263b32;
-    color: var(--green);
-    padding: 3px 9px;
-    border-radius: 5px;
-    font-size: 11px;
-    margin-bottom: 8px;
-}
-
-.empty {
-    text-align: center;
-    color: var(--muted);
-    padding: 25px;
-    display: none;
-}
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.feature {
-    background: var(--card);
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #292934;
-    text-align: center;
-}
-
-.feature .icon {
-    font-size: 30px;
-}
-
-.feature h3 {
-    color: var(--green);
-    margin: 5px 0;
-}
-
-.feature p {
-    font-size: 13px;
-    color: var(--muted);
-}
-
-footer {
-    margin-top: 30px;
-    padding: 25px 15px;
-    text-align: center;
-    background: #17171f;
-    border-top: 1px solid #292934;
-    color: var(--muted);
-    font-size: 13px;
-}
-
-footer strong {
-    color: var(--green);
-}
-
-@media (max-width: 600px) {
-    header {
-        justify-content: center;
-        text-align: center;
-    }
-
-    nav {
-        justify-content: center;
-    }
-
-    .hero {
-        padding: 45px 15px;
-    }
-
-    .section {
-        padding: 28px 15px;
-    }
-}
+@media(max-width:400px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
-
 <header>
-    <a href="#" class="logo">🎮 Clash_sel</a>
-
-    <nav>
-        <a href="#home">صفحه اصلی</a>
-        <a href="#products">محصولات</a>
-        <a href="#features">مزایای ما</a>
-        <a href="#contact">تماس با ما</a>
-    </nav>
+ <div class="container">
+  <nav>
+   <div class="logo">CLASH_<span>SEL</span></div>
+   <button class="btn" id="openCart">🛒 سبد خرید (<span id="count">۰</span>)</button>
+  </nav>
+ </div>
 </header>
 
-<main>
+<main class="container">
+ <section class="hero">
+  <div class="hero-box">
+   <div style="color:#ff858d">فروشگاه گیمینگ</div>
+   <h1>دنیای گیمینگ<br><span>در یک کلیک!</span></h1>
+   <p>محصولت رو انتخاب کن، به سبد خرید اضافه کن و سفارش رو ثبت کن.</p>
+   <button class="btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">مشاهده محصولات</button>
+  </div>
+  <div class="hero-icon">🎮</div>
+ </section>
 
-<section class="hero" id="home">
-    <h1>به <span>Clash_sel</span> خوش آمدید!</h1>
-    <p>
-        فروشگاه گیمینگ شما برای مشاهده و سفارش محصولات بازی.
-        محصول موردنظرت را انتخاب کن و برای سفارش اقدام کن.
-    </p>
-    <a href="#products" class="button">مشاهده محصولات 🎮</a>
-</section>
+ <section id="products">
+  <h2 class="section-title">🔥 محصولات فروشگاه</h2>
+  <div class="filters" id="filters">
+   <button class="active" data-cat="همه">همه</button>
+   <button data-cat="اکانت">اکانت</button>
+   <button data-cat="جم">جم و آیتم</button>
+   <button data-cat="خدمات">خدمات</button>
+  </div>
 
-<section class="section" id="products">
+  <div class="tools">
+   <input id="search" class="field" placeholder="🔎 جست‌وجوی محصول">
+   <select id="sort" class="field" style="max-width:135px">
+    <option value="default">ترتیب</option>
+    <option value="low">ارزان‌تر</option>
+    <option value="high">گران‌تر</option>
+   </select>
+  </div>
+  <div class="grid" id="grid"></div>
+ </section>
 
-    <h2 class="section-title">🛒 محصولات <span>فروشگاه</span></h2>
-
-    <input
-        type="search"
-        id="search"
-        class="search"
-        placeholder="نام محصول را جستجو کن..."
-        aria-label="جستجوی محصولات"
-    >
-
-    <div class="filters">
-        <button class="filter-btn active" data-category="all">همه محصولات</button>
-        <button class="filter-btn" data-category="account">اکانت بازی</button>
-        <button class="filter-btn" data-category="gem">جم و منابع</button>
-        <button class="filter-btn" data-category="other">سایر محصولات</button>
-    </div>
-
-    <div class="products" id="products-list"></div>
-
-    <div class="empty" id="empty">
-        محصولی با این مشخصات پیدا نشد.
-    </div>
-
-</section>
-
-<section class="section" id="features">
-    <h2 class="section-title">چرا <span>Clash_sel؟</span></h2>
-
-    <div class="features">
-        <div class="feature">
-            <div class="icon">🎮</div>
-            <h3>محصولات گیمینگ</h3>
-            <p>مشاهده محصولات و قیمت‌ها در یک صفحه.</p>
-        </div>
-
-        <div class="feature">
-            <div class="icon">💰</div>
-            <h3>قیمت مشخص</h3>
-            <p>قیمت هر محصول زیر نام آن نمایش داده می‌شود.</p>
-        </div>
-
-        <div class="feature">
-            <div class="icon">📱</div>
-            <h3>سفارش آسان</h3>
-            <p>برای سفارش، از روش ارتباطی فروشگاه استفاده کن.</p>
-        </div>
-    </div>
-</section>
-
-<section class="section" id="contact">
-    <h2 class="section-title">تماس با <span>ما</span></h2>
-
-    <div class="feature">
-        <p>برای خرید، ابتدا محصول موردنظرت را انتخاب کن.</p>
-        <p style="margin-top:10px;color:#aaa">
-            راه ارتباطی فروشگاه هنوز تنظیم نشده است.
-        </p>
-    </div>
-</section>
-
+ <div class="notice">
+  ⚠️ قیمت‌ها و محصولات اولیه نمونه هستند. پیش از انتشار، اطلاعات دقیق را وارد کن.
+  پرداخت آنلاین هنوز فعال نیست. این نسخه اطلاعات سفارش را فقط در مرورگر خریدار ذخیره می‌کند و برای مدیر نمی‌فرستد.
+ </div>
 </main>
 
 <footer>
-    <p>© تمام حقوق برای <strong>Clash_sel</strong> محفوظ است.</p>
-    <p>فروشگاه گیمینگ</p>
+ <div class="container">© Clash_sel | فروشگاه گیمینگ</div>
 </footer>
 
+<div class="overlay" id="overlay">
+ <div class="modal">
+  <div class="modal-head">
+   <h2>🛒 سبد خرید و ثبت سفارش</h2>
+   <button class="close" id="closeCart">×</button>
+  </div>
+
+  <div id="cartItems"></div>
+  <div id="checkout" class="hidden">
+   <h3>اطلاعات سفارش</h3>
+   <form id="orderForm">
+    <div class="form-group">
+     <label for="buyerName">نام خریدار</label>
+     <input class="field" id="buyerName" required maxlength="60">
+    </div>
+    <div class="form-group">
+     <label for="buyerPhone">شماره تماس</label>
+     <input class="field" id="buyerPhone" required maxlength="20" inputmode="tel">
+    </div>
+    <div class="form-group">
+     <label for="note">توضیحات سفارش</label>
+     <textarea class="field" id="note" rows="3" maxlength="400"></textarea>
+    </div>
+    <div class="form-group">
+     <label for="payment">روش پرداخت</label>
+     <select class="field" id="payment">
+      <option value="pending">هماهنگی پرداخت با فروشنده</option>
+      <option value="online">پرداخت آنلاین</option>
+     </select>
+     <small class="muted">پرداخت آنلاین تا اتصال درگاه واقعی غیرفعال است.</small>
+    </div>
+    <button class="btn" style="width:100%" type="submit">ثبت سفارش</button>
+   </form>
+   <div id="result"></div>
+  </div>
+ </div>
+</div>
+
 <script>
-"use strict";
-
-/*
-  تنظیمات محصولات:
-  برای تغییر قیمت، مقدار price را تغییر بده.
-  قیمت‌ها به تومان هستند.
-  برای اضافه کردن محصول، یک مورد جدید به آرایه اضافه کن.
-*/
-
-const PRODUCTS = [
-    {
-        id: 1,
-        name: "اکانت کلش معمولی",
-        category: "account",
-        description: "اکانت بازی کلش آف کلنز",
-        price: 150000,
-        icon: "🏰",
-        badge: "اکانت بازی"
-    },
-    {
-        id: 2,
-        name: "اکانت کلش حرفه‌ای",
-        category: "account",
-        description: "اکانت مناسب بازیکنان حرفه‌ای",
-        price: 450000,
-        icon: "⚔️",
-        badge: "ویژه"
-    },
-    {
-        id: 3,
-        name: "بسته جم",
-        category: "gem",
-        description: "بسته جم بازی؛ جزئیات هنگام سفارش مشخص شود",
-        price: 100000,
-        icon: "💎",
-        badge: "جم"
-    },
-    {
-        id: 4,
-        name: "اکانت کلش رویال",
-        category: "account",
-        description: "اکانت بازی کلش رویال",
-        price: 200000,
-        icon: "👑",
-        badge: "اکانت بازی"
-    },
-    {
-        id: 5,
-        name: "محصول گیمینگ ویژه",
-        category: "other",
-        description: "برای دریافت اطلاعات بیشتر سفارش بده",
-        price: 80000,
-        icon: "🎁",
-        badge: "ویژه"
-    },
-    {
-        id: 6,
-        name: "بسته منابع بازی",
-        category: "gem",
-        description: "نوع و مقدار منابع قبل از خرید تأیید شود",
-        price: 120000,
-        icon: "🪙",
-        badge: "منابع"
-    }
+const initialProducts=[
+ {id:1,name:"محصول گیمینگ شماره ۱",cat:"اکانت",price:300000,icon:"🏰",desc:"محصول نمونه؛ نام و قیمت را اصلاح کن."},
+ {id:2,name:"بسته جم نمونه",cat:"جم",price:150000,icon:"💎",desc:"مقدار و جزئیات دقیق محصول را وارد کن."},
+ {id:3,name:"آیتم گیمینگ",cat:"جم",price:90000,icon:"🎁",desc:"توضیحات محصول را از پنل مدیریت تغییر بده."},
+ {id:4,name:"آموزش بازی",cat:"خدمات",price:50000,icon:"🎯",desc:"خدمات آموزشی و راهنمایی بازی."},
+ {id:5,name:"طراحی عکس گیمینگ",cat:"خدمات",price:120000,icon:"🖼️",desc:"طراحی عکس پروفایل سفارشی."},
+ {id:6,name:"پک ویژه گیمینگ",cat:"جم",price:250000,icon:"🔥",desc:"این محصول نمونه است و قابل ویرایش است."}
 ];
 
-/*
-  آدرس سفارش را بعداً می‌توانی تنظیم کنی.
-  فعلاً کلیک روی سفارش، اطلاعات محصول را نمایش می‌دهد.
-*/
+const fa=n=>Number(n).toLocaleString("fa-IR");
+const escapeHTML=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-let selectedCategory = "all";
+function getProducts(){
+ try{return JSON.parse(localStorage.getItem("clashsel_products"))||initialProducts}
+ catch(e){return initialProducts}
+}
+if(!localStorage.getItem("clashsel_products"))
+ localStorage.setItem("clashsel_products",JSON.stringify(initialProducts));
 
-const productList = document.getElementById("products-list");
-const searchInput = document.getElementById("search");
-const emptyMessage = document.getElementById("empty");
+let cart=[];
+try{cart=JSON.parse(localStorage.getItem("clashsel_cart"))||[]}catch(e){}
+let category="همه";
 
-function formatPrice(price) {
-    return new Intl.NumberFormat("fa-IR").format(price) + " تومان";
+function saveCart(){
+ localStorage.setItem("clashsel_cart",JSON.stringify(cart));
+ document.getElementById("count").textContent=fa(cart.reduce((s,x)=>s+x.qty,0));
+}
+function renderProducts(){
+ const query=document.getElementById("search").value.trim().toLowerCase();
+ let list=getProducts().filter(p=>
+  (category==="همه"||p.cat===category)&&
+  (p.name+" "+p.desc+" "+p.cat).toLowerCase().includes(query)
+ );
+ const sort=document.getElementById("sort").value;
+ if(sort==="low")list.sort((a,b)=>a.price-b.price);
+ if(sort==="high")list.sort((a,b)=>b.price-a.price);
+
+ document.getElementById("grid").innerHTML=list.length?list.map(p=>`
+  <article class="card">
+   <div class="card-icon">${escapeHTML(p.icon)}</div>
+   <div class="card-body">
+    <span class="tag">${escapeHTML(p.cat)}</span>
+    <h3>${escapeHTML(p.name)}</h3>
+    <div class="desc">${escapeHTML(p.desc)}</div>
+    <div class="price">${fa(p.price)} تومان</div>
+    <button class="btn" onclick="addToCart(${Number(p.id)})">افزودن به سبد</button>
+   </div>
+  </article>`).join(""):'<div class="empty">محصولی پیدا نشد.</div>';
+}
+function addToCart(id){
+ const p=getProducts().find(x=>x.id===id);
+ if(!p)return;
+ const old=cart.find(x=>x.id===id);
+ if(old)old.qty++;else cart.push({id,qty:1});
+ saveCart();renderCart();
+ document.getElementById("overlay").classList.add("show");
+}
+function changeQty(id,delta){
+ const x=cart.find(i=>i.id===id);if(!x)return;
+ x.qty+=delta;if(x.qty<1)cart=cart.filter(i=>i.id!==id);
+ saveCart();renderCart();
+}
+function removeItem(id){
+ cart=cart.filter(i=>i.id!==id);saveCart();renderCart();
+}
+function renderCart(){
+ const all=getProducts();
+ const items=cart.map(x=>({...x,p:all.find(p=>p.id===x.id)})).filter(x=>x.p);
+ const host=document.getElementById("cartItems");
+ if(!items.length){
+  host.innerHTML='<div class="empty">سبد خرید خالی است.</div>';
+  document.getElementById("checkout").classList.add("hidden");
+  return;
+ }
+ const total=items.reduce((s,x)=>s+x.p.price*x.qty,0);
+ host.innerHTML=items.map(x=>`
+  <div class="cart-item">
+   <div><strong>${escapeHTML(x.p.name)}</strong>
+   <small>${fa(x.p.price)} تومان</small>
+   <button class="remove" onclick="removeItem(${x.id})">حذف</button></div>
+   <div class="qty">
+    <button onclick="changeQty(${x.id},1)">+</button>
+    <b>${fa(x.qty)}</b>
+    <button onclick="changeQty(${x.id},-1)">−</button>
+   </div>
+  </div>`).join("")+
+  `<div class="total"><span>مبلغ کل</span><span>${fa(total)} تومان</span></div>`;
+ document.getElementById("checkout").classList.remove("hidden");
+ document.getElementById("result").innerHTML="";
 }
 
-function renderProducts() {
-    const searchText = searchInput.value.trim().toLowerCase();
+document.getElementById("openCart").onclick=()=>{
+ renderCart();document.getElementById("overlay").classList.add("show");
+};
+document.getElementById("closeCart").onclick=()=>document.getElementById("overlay").classList.remove("show");
+document.getElementById("overlay").onclick=e=>{
+ if(e.target.id==="overlay")e.target.classList.remove("show");
+};
+document.getElementById("search").oninput=renderProducts;
+document.getElementById("sort").onchange=renderProducts;
+document.getElementById("filters").onclick=e=>{
+ if(!e.target.dataset.cat)return;
+ category=e.target.dataset.cat;
+ document.querySelectorAll("#filters button").forEach(b=>b.classList.toggle("active",b===e.target));
+ renderProducts();
+};
 
-    const filtered = PRODUCTS.filter(product => {
-        const categoryMatch =
-            selectedCategory === "all" ||
-            product.category === selectedCategory;
-
-        const searchMatch =
-            product.name.toLowerCase().includes(searchText) ||
-            product.description.toLowerCase().includes(searchText);
-
-        return categoryMatch && searchMatch;
-    });
-
-    productList.innerHTML = "";
-
-    emptyMessage.style.display = filtered.length ? "none" : "block";
-
-    filtered.forEach(product => {
-        const card = document.createElement("article");
-        card.className = "product";
-
-        const image = document.createElement("div");
-        image.className = "product-image";
-        image.textContent = product.icon;
-
-        const content = document.createElement("div");
-        content.className = "product-content";
-
-        const badge = document.createElement("span");
-        badge.className = "badge";
-        badge.textContent = product.badge;
-
-        const title = document.createElement("h3");
-        title.textContent = product.name;
-
-        const description = document.createElement("p");
-        description.className = "description";
-        description.textContent = product.description;
-
-        const price = document.createElement("div");
-        price.className = "price";
-        price.textContent = formatPrice(product.price);
-
-        const order = document.createElement("button");
-        order.className = "button";
-        order.type = "button";
-        order.textContent = "سفارش محصول";
-
-        order.addEventListener("click", () => {
-            const message =
-                "محصول انتخاب‌شده: " + product.name + "\n" +
-                "قیمت: " + formatPrice(product.price) + "\n\n" +
-                "برای تکمیل سفارش، راه ارتباطی فروشگاه باید تنظیم شود.";
-
-            alert(message);
-        });
-
-        content.append(badge, title, description, price, order);
-        card.append(image, content);
-        productList.appendChild(card);
-    });
-}
-
-document.querySelectorAll(".filter-btn").forEach(button => {
-    button.addEventListener("click", () => {
-        document.querySelectorAll(".filter-btn").forEach(item => {
-            item.classList.remove("active");
-        });
-
-        button.classList.add("active");
-        selectedCategory = button.dataset.category;
-        renderProducts();
-    });
-});
-
-searchInput.addEventListener("input", renderProducts);
-
-renderProducts();
+document.getElementById("orderForm").onsubmit=e=>{
+ e.preventDefault();
+ if(!cart.length)return;
+ if(document.getElementById("payment").value==="online"){
+  document.getElementById("result").innerHTML=
+   '<div class="notice">درگاه پرداخت هنوز وصل نشده است. برای جلوگیری از پرداخت نامعتبر، گزینه هماهنگی پرداخت را انتخاب کن.</div>';
+  return;
+ }
+ const all=getProducts();
+ const items=cart.map(x=>({...x,p:all.find(p=>p.id===x.id)})).filter(x=>x.p);
+ const total=items.reduce((s,x)=>s+x.p.price*x.qty,0);
+ const order={
+  code:"CS-"+Date.now().toString().slice(-8),
+  name:document.getElementById("buyerName").value.trim(),
+  phone:document.getElementById("buyerPhone").value.trim(),
+  note:document.getElementById("note").value.trim(),
+  items:items.map(x=>({name:x.p.name,price:x.p.price,qty:x.qty})),
+  total:total,
+  date:new Date().toISOString()
+ };
+ let orders=[];
+ try{orders=JSON.parse(localStorage.getItem("clashsel_orders"))||[]}catch(e){}
+ orders.unshift(order);
+ localStorage.setItem("clashsel_orders",JSON.stringify(orders));
+ document.getElementById("result").innerHTML=`
+  <div class="success"><strong>سفارش در همین مرورگر ذخیره شد.</strong><br>
+  کد سفارش: ${escapeHTML(order.code)}<br>
+  مبلغ: ${fa(total)} تومان<br>
+  <small>این سفارش به مدیر ارسال نشده است و فقط روی دستگاه خریدار ذخیره می‌شود.</small></div>`;
+ cart=[];saveCart();renderCart();
+};
+renderProducts();saveCart();
 </script>
-
 </body>
-                           </html>
+</html>
