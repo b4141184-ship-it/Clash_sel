@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clash_Sel | فروشگاه گیمینگ</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">CLASH<span>_SEL</span></a>
+<nav>
+<a href="/">فروشگاه</a>
+<a href="/track">پیگیری سفارش</a>
+<a href="/admin/login">مدیریت</a>
+</nav>
+</header>
+<main>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% for category, message in messages %}
+<p class="notice">{{ message }}</p>
+{% endfor %}
+{% endwith %}
+{% block body %}{% endblock %}
+</main>
+<footer>CLASH_SEL | فروشگاه گیمینگ</footer>
+</body>
+  </html>
