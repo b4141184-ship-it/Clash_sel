@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block body %}
+<section class="panel">
+    <h1>سفارش ثبت شد!</h1>
+    <p>کد پیگیری شما:</p>
+    <h1 class="red">{{oid}}</h1>
+    <a class="btn" href="/track">پیگیری سفارش</a>
+</section>
+{% endblock %}
