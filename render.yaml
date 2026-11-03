@@ -1,11 +1,16 @@
 services:
   - type: web
-    name: clashsel-order-bridge
+    name: clash-sel
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn server:app --workers 1 --threads 4 --timeout 120
+    startCommand: gunicorn app:app
+    plan: free
     envVars:
-      - key: BOT_TOKEN
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
         sync: false
-      - key: ADMIN_CHAT_ID
+      - key: RUBIKA_WEBHOOK
         sync: false
