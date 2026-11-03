@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block body %}
+<section class="panel narrow">
+    <h1>ورود مدیر</h1>
+
+    <form method="post">
+        <input name="username" placeholder="نام کاربری" required>
+        <input type="password" name="password" placeholder="رمز عبور" required>
+        <button class="btn">ورود</button>
+    </form>
+
+    <small>رمز پیش‌فرض را قبل از انتشار حتماً عوض کن.</small>
+</section>
+{% endblock %}
