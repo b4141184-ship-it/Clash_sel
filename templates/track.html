@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+<section class="panel">
+    <h1>پیگیری سفارش</h1>
+    <form method="post">
+        <input name="oid" type="number" placeholder="کد سفارش" required>
+        <input name="phone" placeholder="شماره موبایل" required>
+        <button class="btn">بررسی</button>
+    </form>
+
+    {% if result %}
+    <h3>سفارش {{result.id}} — {{result.product}}</h3>
+    <p>وضعیت: <b class="red">{{result.status}}</b></p>
+    {% endif %}
+</section>
+{% endblock %}
