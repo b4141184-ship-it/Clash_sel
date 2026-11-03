@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block body %}
+
+<section class="hero">
+    <small>فروشگاه تخصصی گیمینگ</small>
+    <h1>قدرت بازی،<br><em>انتخاب توست.</em></h1>
+    <p>محصول موردنظرت را انتخاب کن و سفارشت را ثبت کن.</p>
+    <a class="btn" href="#products">مشاهده محصولات</a>
+</section>
+
+<h2 id="products">محصولات فروشگاه</h2>
+
+<div class="grid">
+{% for p in products %}
+<article class="card">
+    <div class="photo">
+        {% if p.image %}
+        <img src="/uploads/{{p.image}}" alt="{{p.title}}">
+        {% else %}
+        CLASH SEL
+        {% endif %}
+    </div>
+
+    <div class="pad">
+        <h3>{{p.title}}</h3>
+        <p>{{p.description}}</p>
+        <b class="price">{{"{:,}".format(p.price)}} تومان</b>
+
+        <form action="/order" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="product_id" value="{{p.id}}">
+            <input name="customer" placeholder="نام شما" required>
+            <input name="phone" placeholder="شماره موبایل" required>
+            <label>تصویر رسید پرداخت
+                <input type="file" name="receipt" accept="image/*" required>
+            </label>
+            <button class="btn">ثبت سفارش</button>
+        </form>
+    </div>
+</article>
+{% endfor %}
+</div>
+
+{% endblock %}
