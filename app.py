@@ -1,3 +1,4 @@
+
 import os
 import sqlite3
 import secrets
@@ -78,7 +79,9 @@ def init():
                 (username, generate_password_hash(password))
             )
 
-        if not c.execute("SELECT id FROM products LIMIT 1").fetchone():
+        if not c.execute(
+            "SELECT id FROM products LIMIT 1"
+        ).fetchone():
             c.execute(
                 """INSERT INTO products(title,description,price,image)
                 VALUES(?,?,?,?)""",
@@ -111,7 +114,7 @@ def image_ok(file):
     )
 
 
-# اطلاع‌رسانی اختیاری
+# اطلاع‌رسانی اختیاری روبیکا
 def rubika_notice(order_data):
     hook = os.getenv("RUBIKA_WEBHOOK", "").strip()
 
@@ -178,7 +181,7 @@ def order():
         ext = receipt.filename.rsplit(".", 1)[1].lower()
         filename = secrets.token_hex(16) + "." + ext
 
-        # رسید در پوشه خصوصی ذخیره می‌شود
+        # ذخیره رسید در پوشه خصوصی
         receipt.save(RECEIPTS / filename)
 
         cur = c.execute(
@@ -221,7 +224,8 @@ def track():
         if oid and phone:
             with connect() as c:
                 result = c.execute(
-                    "SELECT id,product,status FROM orders WHERE id=? AND phone=?",
+                    """SELECT id,product,status
+                    FROM orders WHERE id=? AND phone=?""",
                     (oid, phone)
                 ).fetchone()
 
@@ -280,6 +284,25 @@ def admin():
         "admin.html",
         products=products,
         orders=orders
+    )
+
+
+# نمایش امن رسید فقط برای مدیر
+@app.route("/admin/receipt/<int:oid>")
+@admin_only
+def view_receipt(oid):
+    with connect() as c:
+        order = c.execute(
+            "SELECT receipt FROM orders WHERE id=?",
+            (oid,)
+        ).fetchone()
+
+    if not order or not order["receipt"]:
+        return "رسید پیدا نشد.", 404
+
+    return send_from_directory(
+        RECEIPTS,
+        order["receipt"]
     )
 
 
@@ -363,12 +386,13 @@ def health():
     return jsonify(ok=True)
 
 
-# این خط برای اجرای Render با Gunicorn مهم است
+# راه‌اندازی دیتابیس
 init()
 
 
+# اجرای برنامه
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
         port=int(os.getenv("PORT", 5000))
-)
+    )
