@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 {% block body %}
 
@@ -5,43 +6,66 @@
     <h1>پنل مدیریت Clash_Sel</h1>
 
     <h2>افزودن محصول جدید</h2>
+
     <form method="post" action="/admin/add" enctype="multipart/form-data">
         <input name="title" placeholder="نام محصول" required>
+
         <textarea name="description" placeholder="توضیحات محصول"></textarea>
+
         <input name="price" type="number" placeholder="قیمت به تومان" required>
-        <label>تصویر محصول
+
+        <label>
+            تصویر محصول
             <input name="image" type="file" accept="image/*">
         </label>
+
         <button class="btn">افزودن محصول</button>
     </form>
 
     <h2>محصولات ثبت‌شده</h2>
+
     {% for p in products %}
     <div class="card pad">
-        <h3>{{p.title}}</h3>
-        <p>{{"{:,}".format(p.price)}} تومان</p>
-        <form method="post" action="/admin/delete/{{p.id}}">
+        <h3>{{ p.title }}</h3>
+        <p>{{ "{:,}".format(p.price) }} تومان</p>
+
+        <form method="post" action="/admin/delete/{{ p.id }}">
             <button class="btn danger">حذف محصول</button>
         </form>
     </div>
     {% endfor %}
 
     <h2>سفارش‌ها</h2>
+
     {% for o in orders %}
     <div class="card pad">
-        <h3>سفارش شماره {{o.id}}</h3>
-        <p>محصول: {{o.product}}</p>
-        <p>مشتری: {{o.customer}}</p>
-        <p>تلفن: {{o.phone}}</p>
-        <p>وضعیت فعلی: {{o.status}}</p>
+        <h3>سفارش شماره {{ o.id }}</h3>
 
-        <form method="post" action="/admin/status/{{o.id}}">
+        <p>محصول: {{ o.product }}</p>
+        <p>مشتری: {{ o.customer }}</p>
+        <p>تلفن: {{ o.phone }}</p>
+        <p>مبلغ: {{ "{:,}".format(o.amount) }} تومان</p>
+        <p>وضعیت فعلی: {{ o.status }}</p>
+        <p>تاریخ: {{ o.created }}</p>
+
+        {% if o.receipt %}
+        <p>
+            <a href="/admin/receipt/{{ o.id }}" target="_blank">
+                مشاهده رسید پرداخت
+            </a>
+        </p>
+        {% else %}
+        <p>رسیدی ثبت نشده است.</p>
+        {% endif %}
+
+        <form method="post" action="/admin/status/{{ o.id }}">
             <select name="status">
                 <option value="در انتظار بررسی">در انتظار بررسی</option>
                 <option value="تأیید شده">تأیید شده</option>
                 <option value="تکمیل شده">تکمیل شده</option>
                 <option value="رد شده">رد شده</option>
             </select>
+
             <button class="btn">ثبت وضعیت</button>
         </form>
     </div>
