@@ -1,95 +1,71 @@
+
 {% extends "base.html" %}
 {% block body %}
 
 <section class="game-hero">
     <div class="hero-content">
         <span class="hero-tag">👑 فروشگاه تخصصی گیمینگ</span>
-
         <h1>CLASH<span>_SEL</span></h1>
-
         <h2>دنیای اکانت‌های کلش اینجاست!</h2>
-
         <p>خرید آسان | ثبت سفارش | پیگیری سفارش</p>
-
-        <a href="#products" class="btn hero-btn">
-            مشاهده محصولات ⚔️
-        </a>
+        <a href="#products" class="btn">مشاهده محصولات ⚔️</a>
     </div>
 </section>
 
 <div class="shop-layout">
-
     <section class="products-area" id="products">
         <h2 class="section-title">👑 محصولات ویژه CLASH_SEL</h2>
 
         <div class="grid">
             {% for p in products %}
             <article class="card product-card">
-
                 <div class="photo">
                     {% if p.image %}
                     <img src="/uploads/{{ p.image }}" alt="{{ p.title }}">
                     {% else %}
-                    <div class="product-placeholder">👑 CLASH SEL</div>
+                    <div class="product-placeholder">CLASH SEL</div>
                     {% endif %}
                 </div>
 
                 <div class="pad">
                     <h3>{{ p.title }}</h3>
                     <p>{{ p.description }}</p>
-
-                    <b class="price">
-                        {{ "{:,}".format(p.price) }} تومان
-                    </b>
+                    <b class="price">{{ "{:,}".format(p.price) }} تومان</b>
 
                     <form action="/order" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="product_id" value="{{ p.id }}">
+                        <input name="customer" placeholder="نام شما" required>
+                        <input name="phone" placeholder="شماره موبایل" required>
 
-                        <input name="customer"
-                               placeholder="نام شما"
-                               required>
-
-                        <input name="phone"
-                               type="tel"
-                               placeholder="شماره موبایل"
-                               required>
-
-                        <label class="receipt-label">
-                            📸 تصویر رسید پرداخت
-                            <input type="file"
-                                   name="receipt"
-                                   accept="image/png,image/jpeg,image/webp"
-                                   required>
+                        <label>📸 تصویر رسید پرداخت
+                            <input type="file" name="receipt" accept="image/png,image/jpeg,image/webp" required>
                         </label>
 
-                        <button class="btn order-btn" type="submit">
-                            🛒 ثبت سفارش
-                        </button>
+                        <button class="btn" type="submit">🛒 ثبت سفارش</button>
                     </form>
                 </div>
-
             </article>
-            {% else %}
-            <p class="empty-products">هنوز محصولی ثبت نشده است.</p>
             {% endfor %}
         </div>
     </section>
 
     <aside class="payment-box">
         <h2>💳 اطلاعات پرداخت</h2>
-        <p>پرداخت از طریق پست بانک</p>
+        <p>پرداخت از طریق بلوبانک</p>
 
         <div class="payment-placeholder">
-            <p>🏦 بانک: پست بانک</p>
+            <p>🏦 بانک: بلوبانک</p>
             <p>💳 شماره کارت:</p>
 
-            <h3 dir="ltr">6277 6014 1068 2619</h3>
+            <h3 dir="ltr" style="letter-spacing:2px;">
+                6219 8613 5201 4848
+            </h3>
 
-            <p>👤 به نام: طالبی زاده</p>
+            <p>👤 به نام: دانیال درسار</p>
 
-            <button type="button"
-                    class="copy-card"
-                    onclick="navigator.clipboard.writeText('6277601410682619').then(() => this.innerText='کپی شد ✓').catch(() => alert('امکان کپی خودکار وجود ندارد'))">
+            <button
+                type="button"
+                onclick="navigator.clipboard.writeText('6219861352014848').then(() => this.innerText='کپی شد ✓')">
                 📋 کپی شماره کارت
             </button>
         </div>
@@ -98,7 +74,6 @@
             پس از پرداخت، تصویر رسید را هنگام ثبت سفارش ارسال کنید.
         </p>
     </aside>
-
 </div>
 
 <section class="features">
@@ -108,17 +83,11 @@
     <div>⭐ رضایت مشتریان</div>
 </section>
 
-<a class="rubika-banner"
-   href="https://rubika.ir/RaGnAr_shoop"
-   target="_blank"
-   rel="noopener noreferrer">
-
+<a class="rubika-banner" href="https://rubika.ir/ID_FARZAD_SELL" target="_blank">
     <span class="rubika-icon">🔷</span>
-
     <span>
-        کانال روبیکا ما را دنبال کنید
-        <br>
-        <b>@clashofclanc2025</b>
+        کانال روبیکا ما را دنبال کنید<br>
+        <b>@ID_FARZAD_SELL</b>
     </span>
 </a>
 
