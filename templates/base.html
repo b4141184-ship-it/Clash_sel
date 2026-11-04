@@ -4,405 +4,216 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Clash_Sel | فروشگاه گیمینگ</title>
-<link rel="stylesheet" href="/static/style.css">
+<title>CLASH_SEL | فروشگاه گیمینگ</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;
+ color:#fff;
+ font-family:Tahoma,Arial,sans-serif;
+ background:#100307 url('/static/hero-clash.jpg') center top/cover fixed no-repeat;
 }
-
-:root {
-    --red: #ff1728;
-    --dark: #08080b;
-    --panel: #15151c;
-    --white: #fff;
+body:before{
+ content:"";
+ position:fixed;
+ inset:0;
+ z-index:-1;
+ background:linear-gradient(90deg,rgba(20,0,5,.58),rgba(15,0,5,.78));
 }
-
-body {
-    margin: 0;
-    background:
-        radial-gradient(ellipse at 50% 15%, #451016 0%, transparent 45%),
-        linear-gradient(135deg, #08080b, #17090d, #08080b);
-    color: var(--white);
-    font-family: Tahoma, Arial, sans-serif;
-    min-height: 100vh;
+a{color:inherit;text-decoration:none}
+button,input{font-family:inherit}
+.topbar{
+ max-width:1250px;
+ margin:12px auto;
+ padding:14px 20px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ flex-wrap:wrap;
+ gap:15px;
+ background:rgba(10,0,2,.92);
+ border:1px solid #ff2638;
+ border-radius:16px;
+ box-shadow:0 0 18px #ff152c;
 }
-
-a {
-    color: inherit;
-    text-decoration: none;
+.logo{font-size:28px;font-weight:900;font-style:italic}
+.logo span{color:#ff2539}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{
+ padding:12px 17px;
+ border:1px solid #ff293d;
+ border-radius:25px;
+ background:#18070b;
+ font-weight:bold;
+ transition:.2s;
 }
-
-header {
-    min-height: 85px;
-    padding: 15px 4%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 15px;
-    background: rgba(5,5,8,.96);
-    border-bottom: 2px solid var(--red);
-    box-shadow: 0 5px 25px #ff172844;
+.nav a:hover,.btn:hover{
+ background:#ff152c;
+ box-shadow:0 0 15px #ff152c;
 }
-
-.logo {
-    font-size: 28px;
-    font-weight: 900;
-    text-shadow: 0 0 15px #ff1728;
+.container{max-width:1250px;margin:auto;padding:12px}
+.game-hero{
+ min-height:340px;
+ display:flex;
+ align-items:center;
+ justify-content:flex-end;
+ padding:35px;
+ text-align:center;
 }
-
-.logo span {
-    color: var(--red);
+.hero-content{
+ max-width:480px;
+ padding:25px;
+ background:rgba(15,0,4,.72);
+ border:1px solid #ff293d;
+ border-radius:22px;
+ box-shadow:0 0 25px #e90025;
 }
-
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+.hero-tag{color:#ff5968;font-weight:bold}
+.hero-content h1{font-size:55px;margin:15px 0;text-shadow:0 0 15px #ff243b}
+.hero-content h1 span{color:#ff243b}
+.hero-content h2{font-size:25px}
+.hero-content p{font-weight:bold}
+.btn{
+ display:inline-block;
+ background:linear-gradient(#ff3345,#bd0018);
+ color:white;
+ border:1px solid #ff5360;
+ border-radius:12px;
+ padding:13px 22px;
+ font-weight:bold;
+ cursor:pointer;
+ box-shadow:0 0 12px #ed142c;
 }
-
-nav a {
-    padding: 12px 17px;
-    border: 1px solid #34343b;
-    border-radius: 8px;
-    background: #111116;
-    font-size: 14px;
-    transition: .2s;
+.section-title{
+ text-align:center;
+ padding:15px;
+ border-bottom:2px solid #ff243b;
+ color:white;
+ text-shadow:0 0 10px red;
 }
-
-nav a:hover {
-    border-color: var(--red);
-    background: #3a090f;
-    box-shadow: 0 0 15px #ff172855;
+.shop-layout{
+ display:grid;
+ grid-template-columns:minmax(0,2.2fr) minmax(260px,.9fr);
+ gap:20px;
+ align-items:start;
 }
-
-main {
-    width: 100%;
-    max-width: 1450px;
-    margin: auto;
-    padding: 20px;
+.products-area,.payment-box{
+ background:rgba(12,0,3,.94);
+ border:2px solid #ff243b;
+ border-radius:22px;
+ padding:15px;
+ box-shadow:0 0 18px rgba(255,0,35,.55);
 }
-
-.game-hero {
-    min-height: 310px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 35px 15px;
-    border: 1px solid #ff1728;
-    border-radius: 16px;
-    overflow: hidden;
-    background:
-        radial-gradient(circle at 15% 50%, #8c111d88, transparent 30%),
-        radial-gradient(circle at 85% 50%, #8c111d88, transparent 30%),
-        linear-gradient(120deg, #09090c, #321016, #09090c);
-    box-shadow: 0 0 30px #ff172833, inset 0 0 40px #ff172822;
-    position: relative;
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+ gap:15px;
 }
-
-.hero-content {
-    position: relative;
-    z-index: 1;
+.card{
+ background:linear-gradient(145deg,#25080d,#080306);
+ border:1px solid #ff263b;
+ border-radius:17px;
+ overflow:hidden;
+ box-shadow:0 0 10px rgba(255,0,35,.3);
 }
-
-.hero-tag {
-    color: #ff707a;
-    letter-spacing: 2px;
+.photo{height:165px;background:#18070b}
+.photo img{width:100%;height:100%;object-fit:cover}
+.product-placeholder{padding:60px 5px;text-align:center;color:#ff5365}
+.pad{padding:15px;text-align:center}
+.pad h3{color:white}
+.pad p{color:#ddd;line-height:1.8}
+.price{display:block;color:#ff5365;font-size:19px;margin:12px}
+form input{
+ display:block;
+ width:100%;
+ margin:9px 0;
+ padding:12px;
+ border:1px solid #85202e;
+ border-radius:9px;
+ background:#10080b;
+ color:white;
 }
-
-.game-hero h1 {
-    font-size: clamp(42px, 9vw, 85px);
-    margin: 15px 0 5px;
-    font-weight: 1000;
-    text-shadow: 0 0 25px #ff1728;
+form label{display:block;text-align:right;color:#eee;font-size:13px}
+form input[type=file]{font-size:12px}
+form .btn{width:100%;margin-top:8px}
+.payment-box{text-align:center}
+.payment-box h2{color:white;border-bottom:2px solid red;padding-bottom:15px}
+.payment-placeholder{
+ background:linear-gradient(145deg,#29080e,#100306);
+ border:1px solid #ff3348;
+ border-radius:15px;
+ padding:17px 10px;
+ margin:15px 0;
 }
-
-.game-hero h1 span {
-    color: var(--red);
+.payment-placeholder h3{font-size:21px;color:white;overflow-wrap:anywhere}
+.payment-placeholder button{
+ background:#d90024;color:white;border:1px solid #ff5667;
+ border-radius:9px;padding:12px;cursor:pointer;font-weight:bold;
 }
-
-.game-hero h2 {
-    font-size: 27px;
-    margin: 5px;
+.payment-note{color:#ffdf45;line-height:1.9;font-size:13px}
+.features{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:12px;
+ margin:20px 0;
 }
-
-.game-hero p {
-    color: #ddd;
-    font-size: 18px;
-    margin: 18px 0 25px;
+.features div,.rubika-banner{
+ text-align:center;
+ padding:17px 8px;
+ background:rgba(10,0,3,.95);
+ border:1px solid #ff263b;
+ border-radius:30px;
+ box-shadow:0 0 12px rgba(255,0,35,.45);
+ font-weight:bold;
 }
-
-.btn {
-    display: inline-block;
-    width: 100%;
-    padding: 13px 18px;
-    border: 1px solid #ff5260;
-    border-radius: 9px;
-    color: white;
-    background: linear-gradient(135deg, #ff2638, #a90013);
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-    box-shadow: 0 0 15px #ff172844;
-    transition: .2s;
+.rubika-banner{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:15px;
+ max-width:430px;
+ margin:20px auto;
 }
-
-.hero-content .btn {
-    width: auto;
-    min-width: 180px;
+.rubika-icon{font-size:35px}
+.rubika-banner b{color:#ff5365}
+footer{
+ text-align:center;
+ padding:20px;
+ border-top:2px solid red;
+ background:#090205;
+ color:#fff;
 }
-
-.btn:hover {
-    filter: brightness(1.2);
-    box-shadow: 0 0 22px #ff1728;
-}
-
-.shop-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 2.2fr) minmax(250px, 1fr);
-    gap: 18px;
-    margin-top: 22px;
-    align-items: start;
-}
-
-.products-area,
-.payment-box {
-    background: linear-gradient(145deg, #17171d, #09090c);
-    border: 1px solid #ff1728;
-    border-radius: 13px;
-    padding: 18px;
-    box-shadow: 0 0 18px #ff172822;
-}
-
-.section-title,
-.payment-box h2 {
-    border-bottom: 2px solid var(--red);
-    padding-bottom: 14px;
-    margin-top: 0;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 17px;
-}
-
-.product-card {
-    overflow: hidden;
-    background: #0c0c10;
-    border: 1px solid #b91425;
-    border-radius: 12px;
-    box-shadow: 0 0 15px #ff172822;
-}
-
-.photo {
-    height: 165px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle, #48121b, #101014 70%);
-}
-
-.photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.product-placeholder {
-    color: #ff4351;
-    font-size: 25px;
-    font-weight: bold;
-    text-shadow: 0 0 15px red;
-}
-
-.pad {
-    padding: 15px;
-}
-
-.product-card h3 {
-    text-align: center;
-    font-size: 17px;
-}
-
-.product-card p {
-    color: #bbb;
-    font-size: 13px;
-    line-height: 1.9;
-}
-
-.price {
-    display: block;
-    color: #ff2839;
-    text-align: center;
-    font-size: 19px;
-    margin: 15px 0;
-}
-
-.product-card input,
-.product-card textarea,
-.product-card select,
-.panel input,
-.panel textarea,
-.panel select {
-    width: 100%;
-    padding: 12px;
-    margin: 7px 0;
-    border: 1px solid #444;
-    border-radius: 8px;
-    background: #17171e;
-    color: white;
-    font-family: inherit;
-}
-
-.product-card label {
-    display: block;
-    color: #ddd;
-    font-size: 13px;
-    margin: 10px 0;
-}
-
-.payment-box {
-    text-align: center;
-    min-height: 250px;
-}
-
-.payment-placeholder {
-    border: 1px dashed #ff303d;
-    border-radius: 10px;
-    padding: 20px;
-    color: #ff9aa1;
-    line-height: 2;
-    background: #250b10;
-}
-
-.payment-note {
-    color: #ffdc53;
-    font-size: 13px;
-    line-height: 2;
-}
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.features div {
-    padding: 20px 8px;
-    text-align: center;
-    background: #121218;
-    border: 1px solid #64121d;
-    border-radius: 10px;
-    font-weight: bold;
-}
-
-.rubika-banner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    padding: 22px;
-    margin: 20px 0;
-    text-align: center;
-    border: 1px solid #ff1728;
-    border-radius: 12px;
-    background: linear-gradient(120deg, #400b13, #111116);
-    box-shadow: 0 0 20px #ff172844;
-    line-height: 2;
-}
-
-.rubika-banner b {
-    color: #ff5360;
-}
-
-.rubika-icon {
-    font-size: 38px;
-}
-
-.notice {
-    padding: 12px;
-    border: 1px solid #ff303d;
-    border-radius: 8px;
-    background: #350d13;
-}
-
-.panel,
-.card {
-    background: #14141b;
-    border: 1px solid #7e1825;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-
-footer {
-    padding: 25px;
-    text-align: center;
-    color: #aaa;
-    border-top: 2px solid #b91425;
-    background: #07070a;
-}
-
-@media(max-width: 750px) {
-    .shop-layout {
-        grid-template-columns: 1fr;
-    }
-
-    header {
-        justify-content: center;
-        text-align: center;
-    }
-
-    nav {
-        justify-content: center;
-    }
-
-    .features {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .game-hero {
-        min-height: 250px;
-    }
-
-    main {
-        padding: 12px;
-    }
+@media(max-width:800px){
+ .shop-layout{grid-template-columns:1fr}
+ .game-hero{min-height:300px;justify-content:center;padding:15px}
+ .hero-content h1{font-size:40px}
+ .features{grid-template-columns:repeat(2,1fr)}
+ .topbar{justify-content:center}
+ .logo{width:100%;text-align:center}
+ .nav{justify-content:center}
+ .nav a{padding:10px;font-size:12px}
 }
 </style>
 </head>
-
 <body>
 
-<header>
-    <a href="/" class="logo">CLASH<span>_SEL</span></a>
-
-    <nav>
-        <a href="/">🏠 خانه</a>
-        <a href="#products">🛒 محصولات</a>
-        <a href="/track">📋 پیگیری سفارش</a>
-        <a href="/admin/login">👤 پنل مدیریت</a>
-    </nav>
+<header class="topbar">
+ <div class="logo">👑 CLASH<span>_SEL</span></div>
+ <nav class="nav">
+  <a href="/">⌂ خانه</a>
+  <a href="/track">🛒 پیگیری سفارش</a>
+  <a href="/#products">▣ محصولات</a>
+  <a href="/admin">⚙ پنل مدیریت</a>
+ </nav>
 </header>
 
-<main>
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% for category, message in messages %}
-        <p class="notice">{{ message }}</p>
-    {% endfor %}
-{% endwith %}
-
+<main class="container">
 {% block body %}{% endblock %}
 </main>
 
-<footer>
-    CLASH_SEL | فروشگاه گیمینگ
-</footer>
+<footer>👑 CLASH_SEL | فروشگاه گیمینگ 👑</footer>
 
 </body>
 </html>
