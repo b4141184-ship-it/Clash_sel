@@ -19,6 +19,8 @@ a {
     text-decoration: none;
 }
 
+/* نوار بالایی */
+
 .topbar {
     max-width: 1450px;
     margin: 12px auto;
@@ -64,6 +66,8 @@ a {
     box-shadow: 0 0 15px red;
 }
 
+/* محتوای اصلی */
+
 .container {
     max-width: 1450px;
     width: 96%;
@@ -82,7 +86,6 @@ a {
     border: 2px solid #ff243b;
     border-radius: 22px;
     overflow: hidden;
-
     background-color: #170207;
     background-image:
         linear-gradient(
@@ -93,11 +96,9 @@ a {
             rgba(10,0,2,.02) 100%
         ),
         url('/static/hero-clash.jpg');
-
     background-position: center, center 42%;
     background-size: cover;
     background-repeat: no-repeat;
-
     box-shadow: 0 0 25px rgba(237,0,44,.7);
 }
 
@@ -244,6 +245,8 @@ a {
     margin: 12px;
 }
 
+/* فرم سفارش */
+
 form input {
     display: block;
     width: 100%;
@@ -367,7 +370,7 @@ form .btn {
     color: #aaa;
 }
 
-/* نسخه موبایل */
+/* نسخه تبلت و موبایل */
 
 @media (max-width: 800px) {
 
@@ -424,14 +427,71 @@ form .btn {
     }
 }
 
+/* موبایل کوچک */
+
 @media (max-width: 480px) {
 
     .container {
         width: 94%;
     }
 
-    .grid {
+    .shop-layout {
         grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .products-area,
+    .payment-box {
+        padding: 12px;
+        border-radius: 17px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .photo {
+        height: 115px;
+    }
+
+    .pad {
+        padding: 9px;
+    }
+
+    .pad h3 {
+        font-size: 14px;
+    }
+
+    .pad p {
+        font-size: 11px;
+    }
+
+    .price {
+        font-size: 14px;
+        margin: 9px 0;
+    }
+
+    form input {
+        padding: 9px;
+        font-size: 11px;
+    }
+
+    form label {
+        font-size: 11px;
+    }
+
+    .btn {
+        padding: 10px 6px;
+        font-size: 12px;
+    }
+
+    .payment-placeholder h3 {
+        font-size: 19px;
+    }
+
+    .features {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .game-hero {
@@ -446,4 +506,4 @@ form .btn {
         font-size: 11px;
         padding: 9px;
     }
-    }
+                              }
