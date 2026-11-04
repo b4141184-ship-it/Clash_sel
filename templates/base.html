@@ -1,33 +1,43 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#100307">
+
     <title>CLASH_SEL | فروشگاه گیمینگ</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet" href="/static/style.css?v=3">
 </head>
+
 <body>
 
-<header class="topbar">
-    <a class="logo" href="/">👑 CLASH<span>_SEL</span></a>
+    <header class="topbar">
 
-    <nav class="nav">
-        <a href="/">⌂ خانه</a>
-        <a href="/#products">⚔ محصولات</a>
-        <a href="/track">🛒 پیگیری سفارش</a>
-        <a href="/admin">⚙ مدیریت</a>
-    </nav>
-</header>
+        <div class="logo">
+            👑 CLASH<span>_SEL</span>
+        </div>
 
-<main class="container">
-    {% block body %}{% endblock %}
-</main>
+        <nav class="nav">
+            <a href="/">⌂ خانه</a>
+            <a href="/track">🛒 پیگیری سفارش</a>
+            <a href="/#products">▣ محصولات</a>
+            <a href="/admin">⚙ پنل مدیریت</a>
+        </nav>
 
-<footer class="site-footer">
-    👑 CLASH_SEL | فروشگاه تخصصی گیمینگ
-    <p>قدرت انتخاب، خرید آسان و تجربه‌ای متفاوت</p>
-</footer>
+    </header>
+
+    <main class="container">
+
+        {% block body %}{% endblock %}
+
+    </main>
+
+    <footer class="site-footer">
+        <h3>👑 CLASH_SEL</h3>
+        <p>فروشگاه تخصصی گیمینگ</p>
+        <p>تمام حقوق محفوظ است.</p>
+    </footer>
 
 </body>
 </html>
