@@ -1,43 +1,79 @@
+
 {% extends "base.html" %}
 {% block body %}
 
-<section class="hero">
-    <small>فروشگاه تخصصی گیمینگ</small>
-    <h1>قدرت بازی،<br><em>انتخاب توست.</em></h1>
-    <p>محصول موردنظرت را انتخاب کن و سفارشت را ثبت کن.</p>
-    <a class="btn" href="#products">مشاهده محصولات</a>
+<section class="game-hero">
+    <div class="hero-content">
+        <span class="hero-tag">فروشگاه تخصصی گیمینگ</span>
+        <h1>CLASH<span>_SEL</span></h1>
+        <h2>فروشگاه گیمینگ</h2>
+        <p>سریع | امن | مطمئن</p>
+        <a href="#products" class="btn">مشاهده محصولات</a>
+    </div>
 </section>
 
-<h2 id="products">محصولات فروشگاه</h2>
+<div class="shop-layout">
 
-<div class="grid">
-{% for p in products %}
-<article class="card">
-    <div class="photo">
-        {% if p.image %}
-        <img src="/uploads/{{p.image}}" alt="{{p.title}}">
-        {% else %}
-        CLASH SEL
-        {% endif %}
-    </div>
+    <section class="products-area" id="products">
+        <h2 class="section-title">👑 محصولات ویژه</h2>
 
-    <div class="pad">
-        <h3>{{p.title}}</h3>
-        <p>{{p.description}}</p>
-        <b class="price">{{"{:,}".format(p.price)}} تومان</b>
+        <div class="grid">
+            {% for p in products %}
+            <article class="card product-card">
 
-        <form action="/order" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="product_id" value="{{p.id}}">
-            <input name="customer" placeholder="نام شما" required>
-            <input name="phone" placeholder="شماره موبایل" required>
-            <label>تصویر رسید پرداخت
-                <input type="file" name="receipt" accept="image/*" required>
-            </label>
-            <button class="btn">ثبت سفارش</button>
-        </form>
-    </div>
-</article>
-{% endfor %}
+                <div class="photo">
+                    {% if p.image %}
+                    <img src="/uploads/{{ p.image }}" alt="{{ p.title }}">
+                    {% else %}
+                    <div class="product-placeholder">CLASH SEL</div>
+                    {% endif %}
+                </div>
+
+                <div class="pad">
+                    <h3>{{ p.title }}</h3>
+                    <p>{{ p.description }}</p>
+                    <b class="price">{{ "{:,}".format(p.price) }} تومان</b>
+
+                    <form action="/order" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="product_id" value="{{ p.id }}">
+                        <input name="customer" placeholder="نام شما" required>
+                        <input name="phone" placeholder="شماره موبایل" required>
+
+                        <label>تصویر رسید پرداخت
+                            <input type="file" name="receipt" accept="image/png,image/jpeg,image/webp" required>
+                        </label>
+
+                        <button class="btn" type="submit">🛒 خرید محصول</button>
+                    </form>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <aside class="payment-box">
+        <h2>💳 اطلاعات پرداخت</h2>
+        <p>اطلاعات کارت بانکی فروشگاه</p>
+        <div class="payment-placeholder">
+            اطلاعات شماره کارت و صاحب حساب پس از ثبت نهایی وارد می‌شود.
+        </div>
+        <p class="payment-note">
+            پس از پرداخت، تصویر رسید را هنگام ثبت سفارش ارسال کنید.
+        </p>
+    </aside>
+
 </div>
+
+<section class="features">
+    <div>🛡️ پرداخت امن</div>
+    <div>⚡ ثبت سفارش سریع</div>
+    <div>🎧 پشتیبانی</div>
+    <div>⭐ رضایت مشتریان</div>
+</section>
+
+<a class="rubika-banner" href="https://rubika.ir/RaGnAr_shoop" target="_blank">
+    <span class="rubika-icon">🔷</span>
+    <span>کانال روبیکا ما را دنبال کنید<br><b>@RaGnAr_shoop</b></span>
+</a>
 
 {% endblock %}
