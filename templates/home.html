@@ -54,9 +54,24 @@
     <aside class="payment-box">
         <h2>💳 اطلاعات پرداخت</h2>
         <p>اطلاعات کارت بانکی فروشگاه</p>
+
         <div class="payment-placeholder">
-            اطلاعات شماره کارت و صاحب حساب پس از ثبت نهایی وارد می‌شود.
+            <p>🏦 بانک: پست بانک</p>
+            <p>💳 شماره کارت:</p>
+
+            <h3 dir="ltr" style="letter-spacing:2px;">
+                6277 6014 1068 2619
+            </h3>
+
+            <p>👤 به نام: طالبی زاده</p>
+
+            <button
+                type="button"
+                onclick="navigator.clipboard.writeText('6277601410682619').then(() => this.innerText='کپی شد ✓')">
+                📋 کپی شماره کارت
+            </button>
         </div>
+
         <p class="payment-note">
             پس از پرداخت، تصویر رسید را هنگام ثبت سفارش ارسال کنید.
         </p>
@@ -71,9 +86,12 @@
     <div>⭐ رضایت مشتریان</div>
 </section>
 
-<a class="rubika-banner" href="https://rubika.ir/RaGnAr_shoop" target="_blank">
+<a class="rubika-banner" href="https://rubika.ir/clashofclanc2025" target="_blank">
     <span class="rubika-icon">🔷</span>
-    <span>کانال روبیکا ما را دنبال کنید<br><b>@clashofclanc2025</b></span>
+    <span>
+        کانال روبیکا ما را دنبال کنید<br>
+        <b>@clashofclanc2025</b>
+    </span>
 </a>
 
 {% endblock %}
