@@ -24,19 +24,25 @@ RECEIPTS.mkdir(exist_ok=True)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY") or secrets.token_hex(32)
+
 app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
 app.config.update(
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SECURE=True,
     SESSION_COOKIE_SAMESITE="Lax"
 )
+
 app.permanent_session_lifetime = timedelta(hours=8)
 
 DB = BASE / "shop.db"
 ALLOWED = {"png", "jpg", "jpeg", "webp"}
 
-# شماره ثابت مدیر
-ADMIN_PHONE = "09399661388"
+# شماره‌های مجاز مدیر
+ADMIN_PHONES = {
+    "09050413871",
+    "09045913823",
+    "09303835459"
+}
 
 
 def connect():
@@ -73,36 +79,20 @@ def init():
             created TEXT
         );
 
-        CREATE TABLE IF NOT EXISTS admin_otps(
+        CREATE TABLE IF NOT EXISTS admin_totp(
             phone TEXT PRIMARY KEY,
-            code_hash TEXT NOT NULL,
-            expires_at INTEGER NOT NULL,
+            secret TEXT NOT NULL,
             attempts INTEGER DEFAULT 0,
-            last_sent INTEGER DEFAULT 0,
-            window_start INTEGER DEFAULT 0,
-            send_count INTEGER DEFAULT 0
+            locked_until INTEGER DEFAULT 0
         );
         """)
-
-        username = os.getenv("ADMIN_USERNAME", "").strip()
-        password = os.getenv("ADMIN_PASSWORD", "")
-
-        admin_exists = c.execute(
-            "SELECT id FROM admins LIMIT 1"
-        ).fetchone()
-
-        if not admin_exists and username and password:
-            from werkzeug.security import generate_password_hash
-            c.execute(
-                "INSERT INTO admins(username,password) VALUES(?,?)",
-                (username, generate_password_hash(password))
-            )
 
         if not c.execute(
             "SELECT id FROM products LIMIT 1"
         ).fetchone():
             c.execute(
-                """INSERT INTO products(title,description,price,image)
+                """INSERT INTO products
+                (title,description,price,image)
                 VALUES(?,?,?,?)""",
                 (
                     "نمونه محصول",
@@ -129,62 +119,6 @@ def image_ok(file):
         and "." in file.filename
         and file.filename.rsplit(".", 1)[1].lower() in ALLOWED
     )
-
-
-def otp_hash(code):
-    return hashlib.sha256(
-        (app.secret_key + code).encode()
-    ).hexdigest()
-
-
-def send_admin_sms(code):
-    username = os.getenv("MELIPAYAMAK_USERNAME", "").strip()
-    password = os.getenv("MELIPAYAMAK_PASSWORD", "").strip()
-    sender = os.getenv("MELIPAYAMAK_FROM", "").strip()
-
-    if not username or not password or not sender:
-        app.logger.error("Melipayamak environment variables are missing")
-        return False
-
-    try:
-        from melipayamak import Api
-
-        api = Api(username, password)
-        sms = api.sms()
-
-        message = (
-            f"کد ورود پنل مدیریت Clash_Sel: {code}\n"
-            "این کد را در اختیار دیگران قرار ندهید."
-        )
-
-        result = sms.send(ADMIN_PHONE, sender, message)
-
-        if result is None or not str(result).strip():
-            return False
-
-        # بررسی پاسخ معمول وب‌سرویس
-        try:
-            data = json.loads(result) if isinstance(result, str) else result
-
-            if isinstance(data, dict):
-                if "RetStatus" in data and str(data["RetStatus"]) != "1":
-                    return False
-
-                value = data.get("Value")
-                if value is not None:
-                    value_text = str(value).strip()
-                    if value_text.startswith("-"):
-                        return False
-                    if value_text.isdigit() and len(value_text) <= 5:
-                        return False
-        except (ValueError, TypeError):
-            pass
-
-        return True
-
-    except Exception:
-        app.logger.exception("Melipayamak SMS sending failed")
-        return False
 
 
 def rubika_notice(order_data):
@@ -301,122 +235,183 @@ def track():
     return render_template("track.html", result=result)
 
 
-# ورود مدیر با پیامک یک‌بارمصرف
+# ورود مدیر با Google Authenticator
 @app.route("/admin/login", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
     if session.get("admin"):
         return redirect(url_for("admin"))
 
+    setup_secret = None
+
     if request.method == "POST":
-        action = request.form.get("action", "send")
-        now = int(datetime.now().timestamp())
 
-        if action == "send":
-            with connect() as c:
-                row = c.execute(
-                    "SELECT * FROM admin_otps WHERE phone=?",
-                    (ADMIN_PHONE,)
-                ).fetchone()
+        action = request.form.get("action", "")
 
-                if row and now - row["last_sent"] < 60:
-                    flash("لطفاً یک دقیقه صبر کن و دوباره درخواست بده.", "error")
-                    return render_template("login.html", otp_sent=False)
+        phone = request.form.get("phone", "").strip()
 
-                if row and now - row["window_start"] < 3600:
-                    if row["send_count"] >= 5:
-                        flash("تعداد درخواست‌ها زیاد است. یک ساعت بعد تلاش کن.", "error")
-                        return render_template("login.html", otp_sent=False)
+        if phone not in ADMIN_PHONES:
+            flash("این شماره اجازه ورود ندارد.", "error")
+            return render_template(
+                "login.html",
+                setup_secret=None
+            )
 
-                    send_count = row["send_count"] + 1
-                    window_start = row["window_start"]
-                else:
-                    send_count = 1
-                    window_start = now
+        # ثبت اولیه مدیر در Authenticator
+        if action == "setup":
 
-            code = f"{secrets.randbelow(1000000):06d}"
+            setup_key = os.getenv("ADMIN_SETUP_KEY", "").strip()
+            entered_key = request.form.get(
+                "setup_key", ""
+            ).strip()
 
-            if not send_admin_sms(code):
+            if not setup_key:
                 flash(
-                    "ارسال پیامک انجام نشد. تنظیمات ملی‌پیامک را بررسی کن.",
+                    "کلید راه‌اندازی در تنظیمات سرور تعریف نشده است.",
                     "error"
                 )
-                return render_template("login.html", otp_sent=False)
-
-            with connect() as c:
-                c.execute(
-                    """INSERT OR REPLACE INTO admin_otps
-                    (phone,code_hash,expires_at,attempts,last_sent,window_start,send_count)
-                    VALUES(?,?,?,?,?,?,?)""",
-                    (
-                        ADMIN_PHONE,
-                        otp_hash(code),
-                        now + 120,
-                        0,
-                        now,
-                        window_start,
-                        send_count
-                    )
+                return render_template(
+                    "login.html",
+                    setup_secret=None
                 )
 
-            flash("کد ورود به شماره مدیر ارسال شد.", "success")
-            return render_template("login.html", otp_sent=True)
+            if not secrets.compare_digest(
+                setup_key, entered_key
+            ):
+                flash("کلید راه‌اندازی اشتباه است.", "error")
+                return render_template(
+                    "login.html",
+                    setup_secret=None
+                )
 
+            with connect() as c:
+                exists = c.execute(
+                    "SELECT phone FROM admin_totp WHERE phone=?",
+                    (phone,)
+                ).fetchone()
+
+                if exists:
+                    flash(
+                        "این مدیر قبلاً راه‌اندازی شده است.",
+                        "error"
+                    )
+                    return render_template(
+                        "login.html",
+                        setup_secret=None
+                    )
+
+                import pyotp
+
+                new_secret = pyotp.random_base32()
+
+                c.execute(
+                    """INSERT INTO admin_totp
+                    (phone,secret,attempts,locked_until)
+                    VALUES(?,?,0,0)""",
+                    (phone, new_secret)
+                )
+
+            setup_secret = new_secret
+
+            return render_template(
+                "login.html",
+                setup_secret=setup_secret,
+                setup_phone=phone
+            )
+
+        # بررسی کد شش رقمی
         elif action == "verify":
+
             code = request.form.get("code", "").strip()
 
             if not re.fullmatch(r"\d{6}", code):
                 flash("کد باید دقیقاً ۶ رقم باشد.", "error")
-                return render_template("login.html", otp_sent=True)
+                return render_template(
+                    "login.html",
+                    setup_secret=None
+                )
 
             with connect() as c:
                 row = c.execute(
-                    "SELECT * FROM admin_otps WHERE phone=?",
-                    (ADMIN_PHONE,)
+                    "SELECT * FROM admin_totp WHERE phone=?",
+                    (phone,)
                 ).fetchone()
 
                 if not row:
-                    flash("ابتدا درخواست ارسال کد بده.", "error")
-                    return render_template("login.html", otp_sent=False)
-
-                if now > row["expires_at"]:
-                    c.execute(
-                        "DELETE FROM admin_otps WHERE phone=?",
-                        (ADMIN_PHONE,)
+                    flash(
+                        "ابتدا باید حساب خود را راه‌اندازی کنی.",
+                        "error"
                     )
-                    flash("زمان کد تمام شده؛ دوباره کد بگیر.", "error")
-                    return render_template("login.html", otp_sent=False)
-
-                if row["attempts"] >= 5:
-                    c.execute(
-                        "DELETE FROM admin_otps WHERE phone=?",
-                        (ADMIN_PHONE,)
+                    return render_template(
+                        "login.html",
+                        setup_secret=None
                     )
-                    flash("کد باطل شد؛ دوباره درخواست کد بده.", "error")
-                    return render_template("login.html", otp_sent=False)
 
-                if not secrets.compare_digest(
-                    row["code_hash"],
-                    otp_hash(code)
-                ):
-                    c.execute(
-                        "UPDATE admin_otps SET attempts=attempts+1 WHERE phone=?",
-                        (ADMIN_PHONE,)
+                now = int(datetime.now().timestamp())
+
+                if now < row["locked_until"]:
+                    flash(
+                        "به دلیل تلاش ناموفق، موقتاً قفل شده است.",
+                        "error"
                     )
-                    flash("کد واردشده اشتباه است.", "error")
-                    return render_template("login.html", otp_sent=True)
+                    return render_template(
+                        "login.html",
+                        setup_secret=None
+                    )
+
+                import pyotp
+
+                totp = pyotp.TOTP(row["secret"])
+
+                valid = totp.verify(
+                    code,
+                    valid_window=1
+                )
+
+                if not valid:
+                    attempts = row["attempts"] + 1
+                    locked_until = 0
+
+                    if attempts >= 5:
+                        attempts = 0
+                        locked_until = now + 300
+
+                    c.execute(
+                        """UPDATE admin_totp
+                        SET attempts=?, locked_until=?
+                        WHERE phone=?""",
+                        (attempts, locked_until, phone)
+                    )
+
+                    flash(
+                        "کد اشتباه است یا اعتبار آن تمام شده.",
+                        "error"
+                    )
+
+                    return render_template(
+                        "login.html",
+                        setup_secret=None
+                    )
 
                 c.execute(
-                    "DELETE FROM admin_otps WHERE phone=?",
-                    (ADMIN_PHONE,)
+                    """UPDATE admin_totp
+                    SET attempts=0, locked_until=0
+                    WHERE phone=?""",
+                    (phone,)
                 )
 
             session.clear()
             session.permanent = True
             session["admin"] = True
+            session["admin_phone"] = phone
+
             return redirect(url_for("admin"))
 
-    return render_template("login.html", otp_sent=False)
+    return render_template(
+        "login.html",
+        setup_secret=None
+    )
 
 
 @app.route("/admin/logout")
@@ -457,7 +452,10 @@ def view_receipt(oid):
     if not order or not order["receipt"]:
         return "رسید پیدا نشد.", 404
 
-    return send_from_directory(RECEIPTS, order["receipt"])
+    return send_from_directory(
+        RECEIPTS,
+        order["receipt"]
+    )
 
 
 @app.route("/admin/product", methods=["POST"])
@@ -486,7 +484,8 @@ def add_product():
 
     with connect() as c:
         c.execute(
-            """INSERT INTO products(title,description,price,image)
+            """INSERT INTO products
+            (title,description,price,image)
             VALUES(?,?,?,?)""",
             (title, description, price, filename)
         )
@@ -500,7 +499,10 @@ def add_product():
 @admin_only
 def delete_product(pid):
     with connect() as c:
-        c.execute("DELETE FROM products WHERE id=?", (pid,))
+        c.execute(
+            "DELETE FROM products WHERE id=?",
+            (pid,)
+        )
 
     return redirect(url_for("admin"))
 
