@@ -1,14 +1,133 @@
+
 {% extends "base.html" %}
 {% block body %}
+
 <section class="panel narrow">
-    <h1>ورود مدیر</h1>
 
-    <form method="post">
-        <input name="username" placeholder="نام کاربری" required>
-        <input type="password" name="password" placeholder="رمز عبور" required>
-        <button class="btn">ورود</button>
-    </form>
+    <h1>ورود امن مدیران</h1>
 
-    <small>رمز پیش‌فرض را قبل از انتشار حتماً عوض کن.</small>
+    {% if setup_secret %}
+
+        <h2>راه‌اندازی Google Authenticator</h2>
+
+        <p>
+            مدیر: {{ setup_phone }}
+        </p>
+
+        <p>
+            کلید اختصاصی خودت را در Google Authenticator وارد کن:
+        </p>
+
+        <input
+            type="text"
+            value="{{ setup_secret }}"
+            readonly
+            onclick="this.select()"
+            style="direction:ltr;text-align:center;font-size:16px;"
+        >
+
+        <p>
+            در برنامه Google Authenticator:
+        </p>
+
+        <p>
+            علامت + ← Enter a setup key
+        </p>
+
+        <p>
+            Account name:
+            Clash_Sel - {{ setup_phone }}
+        </p>
+
+        <p>
+            Key: کلید بالا
+        </p>
+
+        <p>
+            Type: Time based
+        </p>
+
+        <p style="color:#ff4444;">
+            این کلید محرمانه است؛ آن را برای دیگران ارسال نکن.
+        </p>
+
+        <a href="{{ url_for('login') }}" class="btn">
+            بازگشت به ورود
+        </a>
+
+    {% else %}
+
+        <h2>ورود به پنل مدیریت</h2>
+
+        <form method="POST">
+
+            <input
+                type="hidden"
+                name="action"
+                value="verify"
+            >
+
+            <input
+                type="tel"
+                name="phone"
+                placeholder="شماره موبایل مدیر"
+                pattern="09[0-9]{9}"
+                maxlength="11"
+                required
+            >
+
+            <input
+                type="text"
+                name="code"
+                placeholder="کد ۶ رقمی Authenticator"
+                inputmode="numeric"
+                pattern="[0-9]{6}"
+                maxlength="6"
+                required
+            >
+
+            <button class="btn" type="submit">
+                ورود به مدیریت
+            </button>
+
+        </form>
+
+        <hr>
+
+        <h2>ثبت اولیه مدیر</h2>
+
+        <form method="POST">
+
+            <input
+                type="hidden"
+                name="action"
+                value="setup"
+            >
+
+            <input
+                type="tel"
+                name="phone"
+                placeholder="شماره موبایل مجاز"
+                pattern="09[0-9]{9}"
+                maxlength="11"
+                required
+            >
+
+            <input
+                type="password"
+                name="setup_key"
+                placeholder="کلید راه‌اندازی سرور"
+                required
+            >
+
+            <button class="btn" type="submit">
+                راه‌اندازی Authenticator
+            </button>
+
+        </form>
+
+    {% endif %}
+
 </section>
+
 {% endblock %}
